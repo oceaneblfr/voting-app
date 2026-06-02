@@ -19,6 +19,17 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies and run tests
+        run: |
+          pip install pytest flask redis
+          cd voting-app/azure-vote
+          pytest test_main.py
+
       - name: Build Docker image
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/voting-app:latest .
 

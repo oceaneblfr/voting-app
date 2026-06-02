@@ -1,0 +1,16 @@
+services:
+  azure-vote-front:
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - "8080:80"
+    environment:
+      - REDIS=azure-vote-back
+      - REDIS_PWD=grosmotdepasse
+    depends_on:
+      - azure-vote-back
+
+  azure-vote-back:
+    image: redis:alpine
+    command: redis-server --requirepass "grosmotdepasse"
